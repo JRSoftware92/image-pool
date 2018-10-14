@@ -1,18 +1,28 @@
 import _ from 'lodash'
 
-import { SELECT_PHOTO, POOL_LOAD, POOL_SHUFFLE } from './types'
+import * as actions from './types'
 
 export const selectPhoto = photo => ({
-	type: SELECT_PHOTO,
+	type: actions.SELECT_PHOTO,
 	payload: photo
 })
 
 export const shufflePool = photoArray => ({
-	type: POOL_SHUFFLE,
+	type: actions. POOL_SHUFFLE,
 	payload: _.shuffle(photoArray)
 })
 
 export const loadPool = pool => ({
-	type: POOL_LOAD,
+	type: actions. POOL_LOAD,
 	payload: pool
 })
+
+export const toggleVisibility = filePath => ({ 
+	type: actions.TREE_TOGGLE_VISIBILITY, 
+	payload: filePath 
+});
+
+export const openDirectory = (filePath, files) => ({ 
+	type: actions.TREE_OPEN_DIRECTORY, 
+	payload: { filePath, files }
+});

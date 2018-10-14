@@ -207,6 +207,7 @@
     "bluebird": "^3.5.2",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
+    "electron-settings": "^3.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.4",

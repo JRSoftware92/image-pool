@@ -1,10 +1,22 @@
+// @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 import Directory from './Directory';
 import ImageFile from './ImageFile';
+import { toggleVisibility, openDirectory } from '../../actions'
 import { getAllFiles } from '../../utils/fileUtils';
 
-export default class FileTree extends Component {
+type Props = {
+    +openedDirectories: Object,
+    +visibleDirectories: Object,
+    +openDirectory: Function,
+    +onFileClick: Function,
+    +toggleVisibility: Function,
+}
+
+// https://github.com/mperitz/react-filetree-electron
+class FileTree extends Component<Props> {
   constructor() {
     super();
     this.state = {
@@ -28,9 +40,9 @@ export default class FileTree extends Component {
   handleDirectoryClick(file) {
     this.props.toggleVisibility(file.filePath);
     if ((this.props.openedDirectories && !this.props.openedDirectories[file.filePath]) 
-    || this.props.isVisible[file.filePath]) {
+    || this.props.visibleDirectories[file.filePath]) {
       return getAllFiles(file.filePath)
-      .then(files => this.props.dispatchOpenDirectory(file.filePath, files))
+      .then(files => this.props.openDirectory(file.filePath, files))
       .catch(console.error);
     }
   }
@@ -55,18 +67,18 @@ export default class FileTree extends Component {
               <div onClick={() => this.handleDirectoryClick(file)}>
                 <Directory className="directory" 
                     filepath={file.filePath}
-                    visible={this.props.isVisible[file.filePath]} 
+                    visible={this.props.visibleDirectories[file.filePath]} 
                 />
               </div>
-              {this.props.isVisible[file.filePath] &&
+              {this.props.visibleDirectories[file.filePath] &&
               <FileTree
                 directory={file.filePath}
                 files={file.files}
                 onFileClick={this.props.onFileClick}
                 toggleVisibility={this.props.toggleVisibility}
-                dispatchOpenDirectory={this.props.dispatchOpenDirectory}
+                openDirectory={this.props.openDirectory}
                 openedDirectories={this.props.openedDirectories}
-                isVisible={this.props.isVisible}
+                visibleDirectories={this.props.visibleDirectories}
               />}
             </li>
             :
@@ -82,3 +94,10 @@ export default class FileTree extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ fileTree }) => ({
+    visibleDirectories: fileTree.visibleDirectories,
+    openedDirectories: fileTree.openedDirectories
+})
+
+export default connect(mapStateToProps, { toggleVisibility, openDirectory })(FileTree)
