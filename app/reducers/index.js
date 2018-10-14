@@ -1,12 +1,6 @@
-// @flow
-import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import counter from './counter';
+import { combineReducers } from 'redux'
 
-export default function createRootReducer(history: {}) {
-  const routerReducer = connectRouter(history)(() => {});
+import photos from './photos'
+import activePhoto from './activePhoto'
 
-  return connectRouter(history)(
-    combineReducers({ router: routerReducer, counter })
-  );
-}
+export default combineReducers({ photos, activePhoto })
