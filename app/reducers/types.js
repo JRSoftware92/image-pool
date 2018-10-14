@@ -7,7 +7,8 @@ export type rootStateType = {
 
 export type Photo = {
   +id: string,
-  +path: string
+  +src: string,
+  +caption: string
 };
 
 export type Action = {
