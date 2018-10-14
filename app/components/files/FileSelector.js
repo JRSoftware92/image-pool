@@ -37,11 +37,11 @@ class FileSelector extends Component {
   render() {
     return (
       <div>
-        <input id="file-selector" type="file" onChange={this.selectFile} />
-        {<FileTree
+        <input id="file-selector" type="file" onChange={this.selectFile} webkitdirectory="true" directory="true" />
+        <FileTree
           directory={this.state.directory}
           onFileClick={this.clickTest}
-        />}
+        />
       </div>
     );
   }
