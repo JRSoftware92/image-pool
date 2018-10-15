@@ -11,7 +11,7 @@ class ImagePort extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { currentImage: props.activeImage > 0 ? props.activeImage : 0 };
+        this.state = { currentImage: props.activeImage > -1 ? props.activeImage : 0 };
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);

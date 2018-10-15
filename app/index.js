@@ -5,7 +5,13 @@ import { AppContainer } from 'react-hot-loader';
 import Root from './containers/Root';
 import { configureStore } from './store/configureStore';
 
-const store = configureStore();
+const INITIAL_STATE = {
+  activeImage: '',
+  currentFolder: '/home/john-riley/Pictures',
+  files: []
+}
+
+const store = configureStore(INITIAL_STATE);
 
 render(
   <AppContainer>

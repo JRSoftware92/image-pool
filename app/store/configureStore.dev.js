@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
-const configureStore = (initialState) => {
+const configureStore = (initialState={}) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];

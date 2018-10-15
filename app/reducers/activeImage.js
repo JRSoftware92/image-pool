@@ -1,6 +1,6 @@
 import { LOAD_IMAGE } from '../constants/actions'
 
-export default (state = -1, action={}) => {
+export default (state = '', action={}) => {
 	switch(action.type){
 		case LOAD_IMAGE:
 			return action.payload.activeImage
