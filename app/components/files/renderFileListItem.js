@@ -5,7 +5,7 @@ export default (iconPath, filePath, onItemClick) => {
 
     return (
         <div onClick={ () => {onItemClick(filePath)} }>
-            <img src={iconPath} className="icon-directory" />
+            <img src={iconPath} className="icon" />
             <label>{fileLabel}</label>
         </div>
     )

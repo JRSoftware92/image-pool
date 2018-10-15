@@ -4,6 +4,7 @@ import _ from 'lodash'
 
 import FolderItem from './FolderItem'
 import ImageItem from './ImageItem'
+import BackListItem from './BackListItem'
 
 import * as actions from '../../actions'
 
@@ -15,6 +16,16 @@ class FileList extends Component {
 
         this.onFolderClick = this.onFolderClick.bind(this)
         this.onImageClick = this.onImageClick.bind(this)
+    }
+
+    componentWillMount() {
+        if(!this.props.images || !this.props.images.length){
+            this.props.openFolder(this.props.currentFolder)
+        }
+    }
+
+    onBackClick() {
+        this.props.backDirectory()
     }
 
     onImageClick(imagePath) {
@@ -29,17 +40,18 @@ class FileList extends Component {
         const isImage = /^([^\.\s]+)(\.jpg|\.gif|\.png)/.test(item)
         
         if(isImage){
-            return <ImageItem filepath={item} onItemClick={onImageClick}/>
+            return <ImageItem filepath={item} onItemClick={this.onImageClick}/>
         }
         else {
-            return <FolderItem filepath={item} onItemClick={onFolderClick}/>
+            return <FolderItem filepath={item} onItemClick={this.onFolderClick}/>
         }
     }
 
     render() {
         return (
             <div className="file-list">
-                { _.map(this.props.files, (item)=> {
+                <BackListItem onItemClick={this.onBackClick}/>
+                { _.map(this.props.images, (item)=> {
                     this.renderFileItem(item)
                 })}
             </div>
@@ -47,6 +59,6 @@ class FileList extends Component {
     }
 }
 
-const mapStateToProps = ({ files }) => ({ files })
+const mapStateToProps = ({ images }) => ({ images })
 
 export default connect(mapStateToProps, actions)(FileList)

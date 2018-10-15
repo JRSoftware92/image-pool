@@ -15,7 +15,6 @@ import { app } from 'electron';
 import MenuBuilder from './window/menu';
 import { createWindow } from './window/mainWindow'
 import ipcListener from './window/ipcListener'
-import installDevExtensions from './window/installDevExtensions'
 
 let mainWindow = null;
 
@@ -30,6 +29,16 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
+
+const installDevExtensions = async () => {
+  const installer = require('electron-devtools-installer');
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+
+  return Promise.all(
+    extensions.map(name => installer.default(installer[name], forceDownload))
+  ).catch(console.log);
+};
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -50,6 +59,8 @@ app.on('ready', async () => {
   mainWindow.on('closed', () => {
     mainWindow = null
   });
+
+  mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();

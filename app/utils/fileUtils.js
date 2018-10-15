@@ -32,6 +32,8 @@ const getAllFiles = (dir) => {
   });
 };
 
+const getParentDirectory = (dir) => dir.substr(0, dir.lastIndexOf('/'))
+
 module.exports = {
-  getAllFiles, readFile
+  getAllFiles, getParentDirectory
 };

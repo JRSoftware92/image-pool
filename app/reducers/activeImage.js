@@ -1,9 +1,9 @@
 import { LOAD_IMAGE } from '../constants/actions'
 
-export default (state = '', action={}) => {
+export default (state = -1, action={}) => {
 	switch(action.type){
 		case LOAD_IMAGE:
-			return action.payload.selectedIndex
+			return action.payload.activeImage
 		default:
 			return state
 	}

@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import Lightbox from 'react-images-extended';
 import Gallery from 'react-photo-gallery'
 
-import { Photo } from '../reducers/types'
-
 import _ from 'lodash'
 
 import './ImagePort.css'
@@ -13,7 +11,7 @@ class ImagePort extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { currentImage: props.activePhoto > 0 ? props.activePhoto : 0 };
+        this.state = { currentImage: props.activeImage > 0 ? props.activeImage : 0 };
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
@@ -47,16 +45,15 @@ class ImagePort extends Component {
     }
 
     render(){
-        const alt = 'resources/icons/image.png'
-        const mappedPhotos = _.map(this.props.photos, (photo) => {
-            return { ...photo, alt: alt }
+        const alt = 'resources/icons/icon.png'
+        const mappedImages = _.map(this.props.images, (image) => {
+            return { src: image, alt: alt }
         })
 
         return(
             <div className="image-view">
-                <Gallery photos={mappedPhotos} onClick={this.openLightbox} />
                 <Lightbox 
-                    images={mappedPhotos}
+                    images={mappedImages}
                     onClose={this.closeLightbox}
                     onClickPrev={this.gotoPrevious}
                     onClickNext={this.gotoNext}
@@ -72,8 +69,8 @@ class ImagePort extends Component {
     }
 }
 
-function mapStateToProps({ photos, activePhoto }) {
-    return { photos, activePhoto }
+function mapStateToProps({ images, activeImage }) {
+    return { images, activeImage }
 }
 
 export default connect(mapStateToProps)(ImagePort)
