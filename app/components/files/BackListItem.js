@@ -1,10 +1,12 @@
 import React from 'react'
 
+import './files.css'
+
 export default (props) => {
-    const icon = 'resources/icon/icon.png'
+    const icon = '../resources/icons/folder.png'
     return (
-        <div onClick={ () => { props.onItemClick() } }>
-            <img src={icon} className="icon" />
+        <div className="icon" onClick={ () => { props.onItemClick() } }>
+            <img src={icon} />
             <label>Back</label>
         </div>
     )
