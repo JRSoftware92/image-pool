@@ -1,19 +1,14 @@
-// @flow
 import React, { Component } from 'react'
 
-import FileSelector from './files/FileSelector'
+import FileList from './files/FileList'
 import ImagePort from './ImagePort'
 
-type Props = {};
-
-export default class App extends Component<Props> {
-  props: Props;
-
+export default class App extends Component {
   render() {
     return (
       <div>
         Hello, World!
-        <FileSelector />
+        <FileList />
         <ImagePort />
       </div>
     )

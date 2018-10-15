@@ -10,10 +10,6 @@ Promise.config({
 
 const fs = Promise.promisifyAll(require('fs'));
 
-const readFile = dir => {
-    return fs.readFileAsync(dir).then(text => text);
-};
-
 // this function accesses the file system
 // it returns a promise
 

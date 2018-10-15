@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Lightbox from 'react-images-extended';
@@ -10,14 +9,11 @@ import _ from 'lodash'
 
 import './ImagePort.css'
 
-type Props = {
-    photos: Array<Photo>
-}
-
-class ImagePort extends Component<Props> {
+class ImagePort extends Component {
     constructor(props) {
         super(props);
-        this.state = { currentImage: 0 };
+
+        this.state = { currentImage: props.activePhoto > 0 ? props.activePhoto : 0 };
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
@@ -51,7 +47,7 @@ class ImagePort extends Component<Props> {
     }
 
     render(){
-        const alt = '../../resources/icon.png'
+        const alt = 'resources/icons/image.png'
         const mappedPhotos = _.map(this.props.photos, (photo) => {
             return { ...photo, alt: alt }
         })
@@ -76,8 +72,8 @@ class ImagePort extends Component<Props> {
     }
 }
 
-function mapStateToProps({ photos }) {
-    return { photos }
+function mapStateToProps({ photos, activePhoto }) {
+    return { photos, activePhoto }
 }
 
 export default connect(mapStateToProps)(ImagePort)

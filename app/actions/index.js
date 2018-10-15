@@ -1,11 +1,34 @@
+import { ipcRenderer } from 'electron'
 import _ from 'lodash'
 
-import * as actions from './types'
+import * as actions from '../constants/actions'
+import * as ipcEvents from '../constants/ipcEvents'
 
-export const selectPhoto = photo => ({
-	type: actions.SELECT_PHOTO,
-	payload: photo
-})
+export const loadImage = imagePath => dispatch => {
+	const folder = imagePath.substr(0, imagePath.lastIndexOf('/')
+	ipcRenderer.send(ipcEvents.GET_CONTENTS_OF_FOLDER, folder)
+
+	ipcRenderer.on(ipcEvents.GET_CONTENTS_OF_FOLDER, (event, files) => {
+		const selectedIndex = files.indexOf(imagePath)
+		dispatch({
+			type: actions.LOAD_IMAGE,
+			payload: { 
+				selectedIndex: selectedIndex,
+				images: files
+			}
+		})
+	})
+}
+
+export const openFolder = folder => dispatch => {
+	ipcRenderer.send(ipcEvents.GET_CONTENTS_OF_FOLDER, folder)
+	ipcRenderer.on(ipcEvents.GET_CONTENTS_OF_FOLDER, (event, files) => {
+		dispatch({
+			type: actions.OPEN_FOLDER,
+			payload: files
+		})
+	})
+}
 
 export const shufflePool = photoArray => ({
 	type: actions. POOL_SHUFFLE,
@@ -16,13 +39,3 @@ export const loadPool = pool => ({
 	type: actions. POOL_LOAD,
 	payload: pool
 })
-
-export const toggleVisibility = filePath => ({ 
-	type: actions.TREE_TOGGLE_VISIBILITY, 
-	payload: filePath 
-});
-
-export const openDirectory = (filePath, files) => ({ 
-	type: actions.TREE_OPEN_DIRECTORY, 
-	payload: { filePath, files }
-});

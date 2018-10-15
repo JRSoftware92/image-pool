@@ -2,6 +2,6 @@ import { combineReducers } from 'redux'
 
 import photos from './photos'
 import activePhoto from './activePhoto'
-import fileTree from './fileTree'
+import files from './files'
 
-export default combineReducers({ photos, activePhoto, fileTree })
+export default combineReducers({ photos, activePhoto, files })
